@@ -1,0 +1,26 @@
+import { CHANGE_GROUP } from "./choiceTypes"
+import { CHANGE_ORDER } from "./choiceTypes"
+
+const initialDisplay = JSON.parse(localStorage.getItem('groupOrder')) || {
+    grouping: "PRIORITY",
+    ordering: "PRIORITY"
+}
+
+// reducers
+const displayReducer = (state = initialDisplay, action) => {
+    switch(action.type) {
+        case CHANGE_GROUP: 
+        return {
+            ...state,
+            grouping: action.payload,
+        }
+        case CHANGE_ORDER:
+        return {
+            ...state,
+            ordering: action.payload
+        }
+        default: return state
+    }
+}
+
+export default displayReducer

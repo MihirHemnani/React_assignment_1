@@ -1,0 +1,89 @@
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { changeGroupOrder } from './redux/index'
+
+const Display = () => {
+  
+  const dispatch = useDispatch()
+  const theme = useSelector(state => state.theme)
+  let textColor = theme === "LIGHT"? 'black' : "#ebebeb"
+  let backgroundColor = theme === "LIGHT"? "#ffff" : '#161B22'
+
+  var storedObject = useSelector(state => state.display)
+  const [groupOrder, setGroupOrder] = useState(storedObject)
+
+  const handleSelectChange = (event) => {
+    const { name, value } = event.target;
+    setGroupOrder((prevGroupOrder) => ({
+      ...prevGroupOrder,
+      [name]: value,
+    }));
+  };
+
+  useEffect(() => {
+    localStorage.setItem('groupOrder', JSON.stringify(groupOrder));
+    dispatch(changeGroupOrder(groupOrder))
+  }, [groupOrder])
+  
+  return (
+    <div className="ml-3 items-center" 
+    style={{padding: "0.5rem 0.5rem", 
+          position: "absolute", 
+          border: "1px solid #4a4a4a", 
+          boxShadow: "0 0 8px 0 #ffffff22",
+          borderRadius: "8px",
+          overflow: "hidden",
+          backgroundColor: backgroundColor,
+          transition: "max-height 0.3s ease-in-out"}}>
+      <div className='flex items-center' 
+      style={
+        {
+          justifyContent: "space-between",
+          backgroundColor: backgroundColor
+        }
+      }>
+        <p className="m-1 mr-12 mt-3" style={{color: "#8D8D8D"}}>Grouping</p>
+    
+        <select name="grouping" className='border' 
+        style={{padding: "0.2rem 2rem 0.2rem 0.5rem",
+          backgroundColor: backgroundColor,
+          textTransform: "capitalize",
+          outline: "none",
+          cursor: "pointer",
+          fontSize: "1rem",
+          color: textColor,
+          borderRadius: "6px",
+          border: "1px solid #4a4a4a"
+        }} 
+        value={groupOrder.grouping} onChange={handleSelectChange}>
+            <option value="STATUS">Status</option>
+            <option value="USER">User</option>
+            <option value="PRIORITY">Priority</option>
+        </select>
+    
+      </div>
+  
+      <div className='flex items-center' style={{justifyContent: "space-between"}}>
+        <p className="m-1 mr-12 mt-3" style={{color: "#8D8D8D"}}>Ordering</p>
+    
+        <select name="ordering" className='border' 
+        style={{padding: "0.2rem 2rem 0.2rem 0.5rem",
+          backgroundColor: backgroundColor,
+          textTransform: "capitalize",
+          outline: "none",
+          cursor: "pointer",
+          fontSize: "1rem",
+          color: textColor,
+          borderRadius: "6px",
+          border: "1px solid #4a4a4a"
+        }} 
+        value={groupOrder.ordering} onChange={handleSelectChange}>
+            <option value="PRIORITY">Priority</option>
+            <option value="TITLE">Title</option>
+        </select>
+      </div>
+    </div>
+  )
+}
+
+export default Display

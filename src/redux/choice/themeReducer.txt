@@ -1,0 +1,14 @@
+import { CHANGE_THEME } from "./choiceTypes"
+
+// intial state
+const initialTheme = JSON.parse(localStorage.getItem('theme')) || "LIGHT"
+
+const themeReducer = (state = initialTheme, action) => {
+    switch(action.type) {
+        case CHANGE_THEME: 
+            return action.payload
+        default: return state
+    }
+}
+
+export default themeReducer

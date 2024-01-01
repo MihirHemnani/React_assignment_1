@@ -1,0 +1,13 @@
+import { combineReducers } from 'redux'
+
+import dataReducer from './choice/dataReducer'
+import displayReducer from './choice/displayReducer'
+import themeReducer from './choice/themeReducer'
+
+const rootReducer = combineReducers({
+    data: dataReducer,
+    display: displayReducer,
+    theme: themeReducer
+})
+
+export default rootReducer

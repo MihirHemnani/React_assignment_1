@@ -1,0 +1,21 @@
+import axios from "axios"
+import { fetchDataFailure, fetchDataRequest, fetchDataSuccess } from "./choiceActions"
+
+let API = "https://tfyincvdrafxe7ut2ziwuhe5cm0xvsdu.lambda-url.ap-south-1.on.aws/ticketAndUsers";
+
+const fetchData = () => {
+    return (dispatch) => {
+        dispatch(fetchDataRequest)
+        axios.get(API)
+            .then(response => {
+                const data = response.data
+                dispatch(fetchDataSuccess(data))
+            })
+            .catch(error => {
+                const errMsg = error.message
+                dispatch(fetchDataFailure(errMsg))
+            })
+    }
+}
+
+export default fetchData

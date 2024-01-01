@@ -1,0 +1,67 @@
+import {CHANGE_THEME, CHANGE_DISPLAY, FETCH_DATA_REQUEST, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE} from './choiceTypes'
+
+// intial state
+const initialTheme = {
+    theme: "LIGHT"
+}
+
+const initialDisplay = {
+    grouping: "PRIORITY",
+    ordering: "PRIORITY"
+}
+
+const initialState = {
+    loading: false,
+    data: [],
+    error: ""
+}
+
+// reducers
+const themeReducer = (state = initialTheme, action) => {
+    switch(action.type) {
+        case CHANGE_THEME: 
+        return {
+            theme: "LIGHT"
+        }
+        default: return state
+    }
+}
+
+const displayReducer = (state = initialDisplay, action) => {
+    switch(action.type) {
+        case CHANGE_DISPLAY: 
+        return {
+            ...state,
+            grouping: action.payload,
+            ordering: action.payload
+        }
+        default: return state
+    }
+}
+
+const dataReducer = (state = initialState, action) => {
+    switch(action.type) {
+        case FETCH_DATA_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case FETCH_DATA_SUCCESS: 
+            return {
+                loading: false,
+                data: action.payload,
+                error: ""
+            }
+        case FETCH_DATA_FAILURE:
+            return {
+                loading: false,
+                data: [],
+                error: action.payload
+            }
+
+        default: 
+            return {
+                state
+            }
+    }
+}
